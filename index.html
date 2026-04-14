@@ -25,7 +25,6 @@
 <body class="min-h-screen">
 
     <div id="appContent">
-        <!-- 导航栏 -->
         <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 px-6 py-4">
             <div class="max-w-6xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -39,7 +38,7 @@
                     </div>
                 </div>
                 
-                <!-- 进度条 -->
+                <!-- 学习进度条 -->
                 <div class="hidden md:flex flex-col items-center flex-1 max-w-xs mx-8">
                     <div class="flex justify-between w-full mb-1">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">学习进度</span>
@@ -63,28 +62,25 @@
         </header>
 
         <main class="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <!-- 3D 预览区 -->
             <div class="lg:col-span-5">
                 <div class="bg-white rounded-[3rem] p-6 shadow-xl shadow-slate-200/50 sticky top-28 border border-slate-50 text-center">
                     <div id="three-container" class="w-full aspect-square bg-slate-50 overflow-hidden relative border-4 border-white shadow-inner rounded-[3rem]">
                         <div class="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
-                            <span class="text-[10px] text-slate-300 font-bold uppercase tracking-widest text-xs">旋转 3D 角色</span>
+                            <span class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">旋转 3D 角色</span>
                         </div>
                     </div>
-                    <div class="mt-8">
-                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2 text-left">我的实验室装备</h4>
+                    <div class="mt-8 text-left">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">我的科学家装备</h4>
                         <div class="p-4 bg-slate-50 rounded-[2.5rem] min-h-[100px] flex flex-col items-center justify-center relative border border-slate-100">
-                            <p id="emptyMsg" class="text-slate-300 text-xs italic text-center leading-relaxed px-4">完成全部 15 天挑战即可解锁所有科学装备！</p>
+                            <p id="emptyMsg" class="text-slate-300 text-xs italic text-center leading-relaxed px-4">完成全部 15 天挑战即可免费解锁所有科学装备！</p>
                             <div id="inventoryContainer" class="flex flex-wrap gap-3 w-full"></div>
                         </div>
                     </div>
-                    <div class="mt-8 opacity-40 text-center">
+                    <div class="mt-8 opacity-40">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">准备于 非凡教育 廖老师</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- 任务列表区 -->
             <div class="lg:col-span-7 space-y-12">
                 <div id="missionGrid" class="space-y-12"></div>
                 <footer class="py-10 text-center border-t border-slate-100 opacity-50">
@@ -94,11 +90,11 @@
         </main>
     </div>
 
-    <!-- 问答弹窗 -->
+    <!-- 任务弹窗 -->
     <div id="quizModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 px-4">
         <div class="bg-white rounded-[3.5rem] shadow-2xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-enter border border-white/20">
             <div class="flex justify-between items-center mb-6 px-2">
-                <h3 id="quizTitle" class="text-2xl font-black text-slate-800 tracking-tight text-center w-full">任务详情</h3>
+                <h3 id="quizTitle" class="text-2xl font-black text-slate-800 tracking-tight text-center w-full">打卡详情</h3>
                 <button onclick="closeQuiz()" class="text-slate-300 hover:text-slate-600 text-4xl font-light">&times;</button>
             </div>
             <div id="quizContainer">
@@ -131,7 +127,7 @@
                 <h3 class="text-3xl font-black text-slate-800 tracking-tight">科学家商店</h3>
                 <button onclick="toggleShop()" class="text-slate-300 text-4xl">&times;</button>
             </div>
-            <p id="shopRewardNotice" class="text-blue-500 font-bold text-center text-sm hidden mb-4">✨ 大师级：所有装备已解锁！ ✨</p>
+            <p id="shopRewardNotice" class="text-blue-500 font-bold text-center text-sm hidden mb-4">✨ 大师级成就达成：所有装备免费解开！ ✨</p>
             <div id="shopItems" class="grid grid-cols-2 sm:grid-cols-3 gap-6 overflow-y-auto max-h-[60vh] p-2"></div>
         </div>
     </div>
@@ -155,10 +151,10 @@
                 title: "Bab 2: Sel sebagai Unit Asas Kehidupan",
                 tasks: [
                     { id: "d6", title: "Day 6: Struktur Sel", quiz: { qA: "(Section A) Antara berikut, yang manakah merupakan fungsi kloroplas? [2m]", aA: ["A. Mengawal aktiviti sel", "B. Menghasilkan tenaga", "C. Menyerap cahaya matahari untuk fotosintesis", "D. Memberi sokongan kepada sel"], correctA: 2, qC: "(Section C) Berdasarkan rajah sel tumbuhan, namakan tiga struktur yang hanya terdapat dalam sel tumbuhan dan terangkan fungsinya. [13m]", aC: ["Struktur 1: Dinding sel (1m). Fungsi: Memberi bentuk yang tetap kepada sel (2m) and memberi sokongan/perlindungan (1m).", "Struktur 2: Kloroplas (1m). Fungsi: Mengandungi klorofill (1m) untuk menyerap cahaya matahari (2m) bagi proses fotosintesis (1m).", "Struktur 3: Vakuol (1m). Fungsi: Memberi sokongan kepada tumbuhan (2m) apabila segah (1m)."] } },
-                    { id: "d7", title: "Day 7: Unisel & Multisel", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Kelaskan organisma berikut: Amoeba, Spirogyra, Paramecium, Mucor. Terangkan dua perbezaan utama antara organisma unisel dan multisel. [15m]", aC: ["Klasifikasi: Unisel: Amoeba, Paramecium. Multisel: Spirogyra, Mucor.", "Perbezaan 1: Unisel terdiri daripada satu sel sahaja; Multisel terdiri daripada lebih daripada satu sel.", "Perbezaan 2: Unisel melakukan semua proses hidup dalam satu sel; Multisel mempunyai pelbagai jenis sel fungsi khusus."] } },
+                    { id: "d7", title: "Day 7: Unisel & Multisel", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Kelaskan organisma berikut: Amoeba, Spirogyra, Paramecium, Mucor. Terangkan dua perbezaan utama antara organisma unisel dan multisel. [15m]", aC: ["Klasifikasi: Unisel: Amoeba, Paramecium. Multisel: Spirogyra, Mucor.", "Perbezaan 1: Unisel terdiri daripada satu sel sahaja; Multisel terdiri daripada lebih daripada satu sel.", "Perbezaan 2: Unisel melakukan semua proses hidup dalam satu sel; Multisel mempunyai pelbagai jenis sel fungsi khusus.", "Perbezaan 3: Unisel biasanya bersaiz mikroskopik."] } },
                     { id: "d8", title: "Day 8: Kompleksiti", quiz: { qA: "(Section A) Urutan organisasi sel yang manakah betul? [2m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan bagaimana sel-sel dalam manusia membentuk satu organisma yang kompleks. [13m]", aC: ["Tahap 1: Sel ialah unit asas (cth: sel otot).", "Tahap 2: Sel sama menjalankan fungsi sama membentuk Tisu.", "Tahap 3: Tisu berbeza bekerjasama membentuk Organ (cth: jantung).", "Tahap 4: Organ bekerjasama membentuk Sistem.", "Tahap 5: Semua sistem bekerjasama membentuk Organisma."] } },
                     { id: "d9", title: "Day 9: Fotosintesis", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi fotosintesis. Terangkan apa yang berlaku kepada hasil fotosintesis tersebut. [15m]", aC: ["Persamaan: Karbon dioksida + Air → Glukosa + Oksigen (Cahaya/Klorofil).", "Hasil 1 (Glukosa): Digunakan untuk tenaga; Selebihnya disimpan sebagai kanji di daun/buah/akar.", "Hasil 2 (Oksigen): Dibebaskan melalui stoma untuk respirasi organisma lain."] } },
-                    { id: "d15", title: "Day 15: Eksperimen", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Reka satu eksperimen untuk menunjukkan klorofil diperlukan untuk fotosintesis menggunakan daun bervariasi. [15m]", aC: ["Hipotesis: Hanya bahagian hijau (klorofil) menghasilkan kanji.", "Langkah 1: Dedahkan tumbuhan kepada cahaya matahari.", "Langkah 2: Petik daun and jalankan ujian iodin.", "Langkah 3: Rebus dalam air dan etanol panas.", "Pemerhatian: Bahagian hijau bertukar biru tua; bahagian bukan hijau bertukar coklat."] } }
+                    { id: "d15", title: "Day 15: Eksperimen", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Reka satu eksperimen untuk menunjukkan klorofil diperlukan untuk fotosintesis menggunakan daun bervariasi. [15m]", aC: ["Hipotesis: Hanya bahagian daun yang hijau (klorofil) menghasilkan kanji.", "Langkah 1: Dedahkan tumbuhan kepada cahaya matahari.", "Langkah 2: Petik daun and jalankan ujian iodin.", "Langkah 3: Rebus dalam air dan etanol panas.", "Pemerhatian: Bahagian hijau bertukar biru tua; bahagian bukan hijau bertukar coklat."] } }
                 ]
             },
             {
@@ -186,10 +182,10 @@
         const allTasksFlat = missionsData.flatMap(b => b.tasks);
         let state = { studentName: "科学家", power: 0, completedTasks: [], inventory: [], equipped: { labcoat: false, goggles: false, tool: null }, currentTaskId: null, sectionApassed: false };
 
-        // --- 本地存储 ---
-        const saveLocal = () => localStorage.setItem('sci-f1-Liao-Master', JSON.stringify(state));
+        // --- 本地进度管理 ---
+        const saveLocal = () => localStorage.setItem('sci-f1-Liao-Master-CN', JSON.stringify(state));
         const loadLocal = () => {
-            const data = localStorage.getItem('sci-f1-Liao-Master');
+            const data = localStorage.getItem('sci-f1-Liao-Master-CN');
             if (data) state = JSON.parse(data);
         };
 
@@ -234,7 +230,7 @@
             
             state.currentTaskId = tid;
             state.sectionApassed = (t.quiz.qA === null);
-            document.getElementById('quizTitle').innerText = t.title;
+            document.getElementById('quizTitle').innerText = "任务详情";
             const secA = document.getElementById('sectionAContainer');
             if(t.quiz.qA) {
                 secA.classList.remove('hidden');
@@ -300,8 +296,384 @@
             shopData.forEach(item => {
                 const owned = state.inventory.includes(item.id);
                 const d = document.createElement('div'); d.className = "bg-slate-50 p-6 rounded-[2.5rem] text-center border-2 border-transparent shadow-sm";
-                let btnHtml = owned ? `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-green-100 text-green-600 tracking-widest">已解锁</button>` :
-                             `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-slate-200 text-slate-400 tracking-widest">待解锁</button>`;
+                let btnHtml = owned ? `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-green-100 text-green-600 tracking-widest uppercase">已解锁</button>` :
+                             `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-slate-200 text-slate-400 tracking-widest uppercase">待解锁</button>`;
+                d.innerHTML = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-slate-800 text-sm">${item.name}</h4>${btnHtml}`;
+                c.appendChild(d);
+            });
+        }
+
+        window.toggleEquip = (id) => {
+            const item = shopData.find(i => i.id === id);
+            if (item.layer === 'tool') state.equipped.tool = (state.equipped.tool === id) ? null : id;
+            else state.equipped[item.layer] = !state.equipped[item.layer];
+            updateUI(); saveLocal();
+        };
+
+        function updateUI() {
+            document.getElementById('powerCounter').innerText = state.power;
+            document.getElementById('displayName').innerText = state.studentName;
+            const doneCount = state.completedTasks.length; const totalCount = allTasksFlat.length;
+            const percentage = (doneCount / totalCount) * 100;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressText').innerText = `${doneCount}/${totalCount}`;
+            if(doneCount === totalCount) document.getElementById('progressBar').classList.add('progress-glow');
+            
+            const rankBadge = document.getElementById('rankBadge');
+            if(rankBadge) rankBadge.innerText = (doneCount === totalCount) ? "🏅 荣誉大师" : "等级 " + (Math.floor(doneCount/3) + 1);
+            
+            const inv = document.getElementById('inventoryContainer');
+            inv.innerHTML = '';
+            if (state.inventory.length === 0) document.getElementById('emptyMsg').classList.remove('hidden');
+            else {
+                document.getElementById('emptyMsg').classList.add('hidden');
+                state.inventory.forEach(itemId => {
+                    const item = shopData.find(i => i.id === itemId); if (!item) return;
+                    const isEq = (state.equipped[item.layer] === itemId || state.equipped[item.layer] === true);
+                    const btn = document.createElement('button'); btn.onclick = () => window.toggleEquip(itemId);
+                    btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-all border-4 shadow-sm relative ${isEq ? 'border-blue-500 bg-blue-50' : 'border-white bg-white hover:border-blue-200'}`;
+                    btn.innerHTML = item.icon + (isEq ? '<div class="absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full border-2 border-white"></div>' : '');
+                    inv.appendChild(btn);
+                });
+            }
+            if (items3D.labcoat) {
+                items3D.labcoat.visible = state.equipped.labcoat; items3D.goggles.visible = state.equipped.goggles;
+                items3D.tools.children.forEach(c => c.visible = (c.name === state.equipped.tool));
+            }
+        }
+
+        function renderMissions() {
+            const g = document.getElementById('missionGrid'); g.innerHTML = '';
+            const isAllDone = state.completedTasks.length === allTasksFlat.length;
+            missionsData.forEach(ch => {
+                const d = document.createElement('div');
+                d.innerHTML = `<h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 ml-1">${ch.title}</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        ${ch.tasks.map(t => {
+                            const idx = allTasksFlat.indexOf(t); const locked = !isAllDone && idx > 0 && !state.completedTasks.includes(allTasksFlat[idx-1].id); const done = state.completedTasks.includes(t.id);
+                            return `<div onclick="window.toggleTask('${t.id}')" class="mission-card bg-white p-6 rounded-[2.5rem] border-2 border-transparent shadow-sm 
+                                ${locked ? 'locked' : 'cursor-pointer hover:border-blue-400 hover:shadow-xl'} ${done ? 'completed' : ''}">
+                                <div class="flex justify-between items-center"><p class="font-bold text-sm tracking-tight">${t.title}</p>
+                                <span class="text-green-500 text-lg">${done ? '✅' : (locked ? '🔒' : '⭐')}</span></div></div>`;
+                        }).join('')}</div>`;
+                g.appendChild(d);
+            });
+        }
+
+        loadLocal();
+        initThree();
+        renderMissions();
+        updateUI();
+        
+        window.toggleTask = toggleTask;
+        window.checkA = checkA;
+        window.markCompleted = markCompleted;
+        window.closeQuiz = closeQuiz;
+        window.toggleShop = toggleShop;
+        window.toggleEquip = toggleEquip;
+        window.showSectionC = showSectionC;
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科学 F1 打卡挑战 - 非凡教育 廖老师</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .mission-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .mission-card.completed { background-color: #f0fdf4; border-color: #22c55e; color: #166534; }
+        .mission-card.locked { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        .modal-enter { animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #three-container canvas { border-radius: 2.5rem; cursor: grab; }
+        .point-item { border-left: 4px solid #3b82f6; padding-left: 12px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.5; background: white; padding: 10px; border-radius: 0 8px 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .progress-glow { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="appContent">
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 px-6 py-4">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Logo -->
+                    <div class="w-12 h-12 rounded-xl bg-white shadow-md overflow-hidden flex items-center justify-center border border-slate-100 p-0.5">
+                        <img src="254622913_458673955588740_2874846904320760922_n.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/50?text=ME'">
+                    </div>
+                    <div>
+                        <h2 id="displayName" class="font-black text-slate-800 text-xl tracking-tight">科学家</h2>
+                        <span id="rankBadge" class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">初级</span>
+                    </div>
+                </div>
+                
+                <!-- 学习进度条 -->
+                <div class="hidden md:flex flex-col items-center flex-1 max-w-xs mx-8">
+                    <div class="flex justify-between w-full mb-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">学习进度</span>
+                        <span id="progressText" class="text-[10px] font-bold text-blue-600">0/15</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div id="progressBar" class="bg-blue-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleShop()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 px-5 py-2.5 rounded-2xl font-black transition-all shadow-sm text-sm">
+                        🛒 商店
+                    </button>
+                    <div class="bg-white px-5 py-2.5 rounded-2xl border border-slate-100 flex items-center shadow-sm">
+                        <span class="text-blue-600 font-black text-xl mr-1" id="powerCounter">0</span>
+                        <span class="text-slate-400 text-[10px] font-bold tracking-tighter uppercase">能量</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-[3rem] p-6 shadow-xl shadow-slate-200/50 sticky top-28 border border-slate-50 text-center">
+                    <div id="three-container" class="w-full aspect-square bg-slate-50 overflow-hidden relative border-4 border-white shadow-inner rounded-[3rem]">
+                        <div class="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
+                            <span class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">旋转 3D 角色</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-left">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">我的科学家装备</h4>
+                        <div class="p-4 bg-slate-50 rounded-[2.5rem] min-h-[100px] flex flex-col items-center justify-center relative border border-slate-100">
+                            <p id="emptyMsg" class="text-slate-300 text-xs italic text-center leading-relaxed px-4">完成全部 15 天挑战即可免费解锁所有科学装备！</p>
+                            <div id="inventoryContainer" class="flex flex-wrap gap-3 w-full"></div>
+                        </div>
+                    </div>
+                    <div class="mt-8 opacity-40">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">准备于 非凡教育 廖老师</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-12">
+                <div id="missionGrid" class="space-y-12"></div>
+                <footer class="py-10 text-center border-t border-slate-100 opacity-50">
+                    <p class="text-xs font-bold text-slate-400">© 准备于 非凡教育 廖老师</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- 任务弹窗 -->
+    <div id="quizModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 px-4">
+        <div class="bg-white rounded-[3.5rem] shadow-2xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-enter border border-white/20">
+            <div class="flex justify-between items-center mb-6 px-2">
+                <h3 id="quizTitle" class="text-2xl font-black text-slate-800 tracking-tight text-center w-full">打卡详情</h3>
+                <button onclick="closeQuiz()" class="text-slate-300 hover:text-slate-600 text-4xl font-light">&times;</button>
+            </div>
+            <div id="quizContainer">
+                <div id="sectionAContainer" class="mb-8 p-8 bg-blue-50/50 rounded-[2.5rem] border border-blue-100">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-[10px] font-black bg-blue-600 text-white px-2 py-1 rounded uppercase tracking-widest">SECTION A</span>
+                    </div>
+                    <p id="quizQuestionA" class="text-slate-700 font-bold text-lg leading-relaxed mb-6"></p>
+                    <div id="quizOptionsA" class="grid grid-cols-1 gap-4"></div>
+                </div>
+                <div id="sectionC" class="hidden border-t border-slate-100 pt-8">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-[10px] font-black bg-amber-500 text-white px-2 py-1 rounded uppercase tracking-widest">SECTION C</span>
+                    </div>
+                    <p id="quizQuestionC" class="text-slate-700 font-bold mb-6 text-lg leading-snug"></p>
+                    <div id="quizAnswerC" class="bg-slate-50 p-6 rounded-[2rem] border border-slate-200 mb-8"></div>
+                    <button id="completeBtn" onclick="markCompleted()" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-5 rounded-2xl shadow-xl transform active:scale-95 transition-all">
+                        确认并领取 10 能量
+                    </button>
+                </div>
+            </div>
+            <div id="quizFeedback" class="mt-6 hidden p-5 rounded-2xl text-center font-black"></div>
+        </div>
+    </div>
+
+    <!-- 商店弹窗 -->
+    <div id="shopModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 px-4">
+        <div class="bg-white rounded-[3.5rem] shadow-2xl p-10 w-full max-w-2xl modal-enter border border-white/20">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-3xl font-black text-slate-800 tracking-tight">科学家商店</h3>
+                <button onclick="toggleShop()" class="text-slate-300 text-4xl">&times;</button>
+            </div>
+            <p id="shopRewardNotice" class="text-blue-500 font-bold text-center text-sm hidden mb-4">✨ 大师级成就达成：所有装备免费解开！ ✨</p>
+            <div id="shopItems" class="grid grid-cols-2 sm:grid-cols-3 gap-6 overflow-y-auto max-h-[60vh] p-2"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- 核心题目与答案 (纯马来文) ---
+        const missionsData = [
+            {
+                bab: 1,
+                title: "Bab 1: Pengenalan kepada Penyiasatan Saintifik",
+                tasks: [
+                    { id: "d1", title: "Day 1: Keselamatan Makmal", quiz: { qA: "(Section A) Antara simbol amaran berikut, yang manakah mewakili bahan beracun? / Which of the following hazard symbols represents toxic substances? [2m]", aA: ["A. 💀", "B. 🔥", "C. ☢️", "D. 💥"], correctA: 0, qC: "(Section C) Huraikan langkah-langkah yang perlu diambil jika berlaku tumpahan merkuri di dalam makmal. / Describe the steps taken if a mercury spill occurs. [13m]", aC: ["Langkah 1: Maklumkan guru atau pembantu makmal dengan segera. (1m) / Inform teacher or lab assistant immediately. (1m)", "Langkah 2: Jadikan kawasan tumpahan sebagai kawasan larangan. (1m) / Declare spill area as restricted zone. (1m)", "Langkah 3: Tabur serbuk sulfur untuk menutupi tumpahan. (1m) / Sprinkle sulfur powder to cover the spill. (1m)", "Langkah 4: Hubungi Jabatan Bomba. (1m) / Call the Fire Department. (1m)", "Sebab: Merkuri adalah logam berat yang sangat toksik. (1m) / Mercury is a highly toxic heavy metal. (1m)", "Sebab: Wap merkuri menyerang sistem saraf. (1m) / Mercury vapor attacks the nervous system. (1m)", "Sebab: Sulfur bertindak balas dengan merkuri untuk mengelakkan penguapan. (1m) / Sulfur reacts with mercury to prevent evaporation. (1m)"] } },
+                    { id: "d2", title: "Day 2: Ketumpatan", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Terangkan mengapa sebutir telur akan tenggelam dalam air mineral tetapi terapung dalam air garam yang pekat. / Explain why an egg sinks in mineral water but floats in concentrated salt water. [15m]", aC: ["Ketumpatan telur adalah lebih tinggi daripada air mineral. (1m)", "Maka, telur akan tenggelam dalam air mineral. (1m)", "Apabila garam dilarutkan, ketumpatan air mineral bertambah. (2m)", "Kepekatan garam yang tinggi menjadikan air garam lebih tumpat daripada telur. (2m)", "Telur kini menjadi kurang tumpat daripada air garam. (2m)", "Daya apungan (buoyant force) yang bertindak ke atas telur bertambah. (2m)", "Daya apungan ini cukup kuat untuk menyokong berat telur. (1m)", "Maka, telur akan terapung di permukaan air garam. (1m)"] } },
+                    { id: "d3", title: "Day 3: Kuantiti Fizik", quiz: { qA: "(Section A) Apakah unit S.I. bagi arus elektrik? / What is the S.I. unit for electric current? [2m]", aA: ["A. Volt (V)", "B. Ohm (Ω)", "C. Ampere (A)", "D. Watt (W)"], correctA: 2, qC: "(Section C) Terangkan cara mengelakkan ralat paralaks semasa mengambil bacaan pada pembaris. / Explain how to avoid parallax error when taking readings on a ruler. [13m]", aC: ["Definisi: Ralat paralaks berlaku kerana kedudukan mata yang salah. (2m)", "Langkah: Kedudukan mata mestilah berserenjang dengan skala alat pengukur. (3m)", "Langkah: Pastikan mata berada tepat di atas tanda senggatan. (2m)", "Tujuan: Untuk mendapatkan bacaan yang tepat. (1m)"] } },
+                    { id: "d4", title: "Day 4: Respirasi Sel", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi respirasi sel dan terangkan kepentingannya. / Write the word equation for cell respiration and explain its importance. [15m]", aC: ["Persamaan: Glukosa (1m) + Oksigen (1m) → Karbon dioksida (1m) + Air (1m) + Tenaga (1m).", "Lokasi: Proses ini berlaku di dalam mitokondria. (2m)", "Kepentingan: Membebaskan tenaga untuk aktiviti sel. (2m)", "Kepentingan: Membolehkan organisma melakukan pergerakan. (2m)", "Kepentingan: Membantu dalam proses pertumbuhan sel baru. (2m)"] } },
+                    { id: "d5", title: "Day 5: Tahap Organisasi", quiz: { qA: "(Section A) Manakah antara berikut merupakan urutan organisasi sel yang betul? / Which is the correct cell organization sequence? [3m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem", "C. Tisu → Sel → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan fungsi jantung sebagai sebuah organ dalam sistem peredaran darah. / Explain the heart's function as an organ in the circulatory system. [12m]", aC: ["Komponen: Jantung terdiri daripada tisu otot jantung. (2m)", "Fungsi: Ia mengecut dan mengendur secara berterusan. (2m)", "Tujuan: Untuk mengepam darah ke seluruh badan. (3m)", "Kepentingan: Memastikan oksigen dan nutrien sampai ke setiap sel. (3m)", "Kepentingan: Menyingkirkan bahan buangan seperti karbon dioksida. (2m)"] } }
+                ]
+            },
+            {
+                bab: 2,
+                title: "Bab 2: Sel sebagai Unit Asas Kehidupan",
+                tasks: [
+                    { id: "d6", title: "Day 6: Struktur Sel", quiz: { qA: "(Section A) Antara berikut, yang manakah merupakan fungsi kloroplas? [2m]", aA: ["A. Mengawal aktiviti sel", "B. Menghasilkan tenaga", "C. Menyerap cahaya matahari untuk fotosintesis", "D. Memberi sokongan kepada sel"], correctA: 2, qC: "(Section C) Berdasarkan rajah sel tumbuhan, namakan tiga struktur yang hanya terdapat dalam sel tumbuhan dan terangkan fungsinya. [13m]", aC: ["Struktur 1: Dinding sel (1m). Fungsi: Memberi bentuk yang tetap kepada sel (2m) and memberi sokongan/perlindungan (1m).", "Struktur 2: Kloroplas (1m). Fungsi: Mengandungi klorofill (1m) untuk menyerap cahaya matahari (2m) bagi proses fotosintesis (1m).", "Struktur 3: Vakuol (1m). Fungsi: Memberi sokongan kepada tumbuhan (2m) apabila segah (1m)."] } },
+                    { id: "d7", title: "Day 7: Unisel & Multisel", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Kelaskan organisma berikut: Amoeba, Spirogyra, Paramecium, Mucor. Terangkan dua perbezaan utama antara organisma unisel dan multisel. [15m]", aC: ["Klasifikasi: Unisel: Amoeba, Paramecium. Multisel: Spirogyra, Mucor.", "Perbezaan 1: Unisel terdiri daripada satu sel sahaja; Multisel terdiri daripada lebih daripada satu sel.", "Perbezaan 2: Unisel melakukan semua proses hidup dalam satu sel; Multisel mempunyai pelbagai jenis sel fungsi khusus.", "Perbezaan 3: Unisel biasanya bersaiz mikroskopik."] } },
+                    { id: "d8", title: "Day 8: Kompleksiti", quiz: { qA: "(Section A) Urutan organisasi sel yang manakah betul? [2m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan bagaimana sel-sel dalam manusia membentuk satu organisma yang kompleks. [13m]", aC: ["Tahap 1: Sel ialah unit asas (cth: sel otot).", "Tahap 2: Sel sama menjalankan fungsi sama membentuk Tisu.", "Tahap 3: Tisu berbeza bekerjasama membentuk Organ (cth: jantung).", "Tahap 4: Organ bekerjasama membentuk Sistem.", "Tahap 5: Semua sistem bekerjasama membentuk Organisma."] } },
+                    { id: "d9", title: "Day 9: Fotosintesis", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi fotosintesis. Terangkan apa yang berlaku kepada hasil fotosintesis tersebut. [15m]", aC: ["Persamaan: Karbon dioksida + Air → Glukosa + Oksigen (Cahaya/Klorofil).", "Hasil 1 (Glukosa): Digunakan untuk tenaga; Selebihnya disimpan sebagai kanji di daun/buah/akar.", "Hasil 2 (Oksigen): Dibebaskan melalui stoma untuk respirasi organisma lain."] } },
+                    { id: "d15", title: "Day 15: Eksperimen", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Reka satu eksperimen untuk menunjukkan klorofil diperlukan untuk fotosintesis menggunakan daun bervariasi. [15m]", aC: ["Hipotesis: Hanya bahagian daun yang hijau (klorofil) menghasilkan kanji.", "Langkah 1: Dedahkan tumbuhan kepada cahaya matahari.", "Langkah 2: Petik daun and jalankan ujian iodin.", "Langkah 3: Rebus dalam air dan etanol panas.", "Pemerhatian: Bahagian hijau bertukar biru tua; bahagian bukan hijau bertukar coklat."] } }
+                ]
+            },
+            {
+                bab: 3,
+                title: "Bab 3: Koordinasi dan Gerak Balas",
+                tasks: [
+                    { id: "d10", title: "Day 10: Homeostasis", quiz: { qA: "(Section A) Apakah maksud homeostasis? [2m]", aA: ["A. Proses penghasilan sel baru", "B. Kawalan persekitaran dalaman badan"], correctA: 1, qC: "(Section C) Terangkan kepentingan homeostasis kepada manusia. [13m]", aC: ["Mengekalkan persekitaran dalaman yang stabil.", "Membolehkan proses kimia (metabolisme) berlaku dengan cekap.", "Memastikan enzim dapat berfungsi pada tahap optimum.", "Elak kematian daripada perubahan drastik."] } },
+                    { id: "d11", title: "Day 11: Suhu Panas", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Huraikan bagaimana kulit bertindak balas untuk menurunkan suhu badan dalam cuaca panas. [15m]", aC: ["Kelenjar peluh: Rembes peluh (serap haba untuk sejatan).", "Salur darah: Mengembang (Pemvasodilatan) untuk bebas haba radiasi.", "Bulu roma: Condong ke permukaan kulit untuk kurangkan udara terperangkap."] } },
+                    { id: "d12", title: "Day 12: Suhu Sejuk", quiz: { qA: "(Section A) Mengapakah badan kita menggigil semasa sejuk? [2m]", aA: ["A. Untuk membebaskan haba", "B. Untuk menghasilkan haba"], correctA: 1, qC: "(Section C) Terangkan peranan otot rangka and hormon dalam sejuk. [13m]", aC: ["Otot rangka mengecut dan mengendur secara aktif (menggigil).", "Menghasilkan haba untuk menaikkan suhu badan.", "Hormon tertentu dirembeskan untuk tingkat metabolisme."] } },
+                    { id: "d13", title: "Day 13: Kawalan Air", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Terangkan mekanisme kawal atur air apabila minum air terlalu sedikit. [15m]", aC: ["Kandungan air menurun -> detected by hipotalamus.", "Ginjal menyerap semula lebih banyak air ke dalam darah.", "Urin yang dihasilkan sedikit dan pekat."] } },
+                    { id: "d14", title: "Day 14: Transpirasi", quiz: { qA: "(Section A) Di manakah proses transpirasi berlaku? [2m]", aA: ["A. Akar", "B. Stoma pada daun"], correctA: 1, qC: "(Section C) Terangkan bagaimana transpirasi membantu tumbuhan mengekalkan homeostasis. [13m]", aC: ["Transpirasi ialah kehilangan air dalam bentuk wap air melalui stoma.", "Bantu menyejukkan tumbuhan pada hari panas.", "Hasilkan daya tarikan transpirasi untuk tarik air/mineral dari akar."] } }
+                ]
+            }
+        ];
+
+        const shopData = [
+            { id: 'item_labcoat', name: '3D 实验袍', icon: '🥼', layer: 'labcoat' },
+            { id: 'item_goggles', name: '科研护目镜', icon: '🽽', layer: 'goggles' },
+            { id: 'item_microscope', name: '显微镜', icon: '🔬', layer: 'tool' },
+            { id: 'item_flask', name: '圆锥瓶', icon: '🧪', layer: 'tool' },
+            { id: 'item_telescope', name: '望远镜', icon: '🔭', layer: 'tool' },
+            { id: 'item_dna', name: 'DNA 模型', icon: '🧬', layer: 'tool' }
+        ];
+
+        const allTasksFlat = missionsData.flatMap(b => b.tasks);
+        let state = { studentName: "科学家", power: 0, completedTasks: [], inventory: [], equipped: { labcoat: false, goggles: false, tool: null }, currentTaskId: null, sectionApassed: false };
+
+        // --- 本地进度管理 ---
+        const saveLocal = () => localStorage.setItem('sci-f1-Liao-Master-CN', JSON.stringify(state));
+        const loadLocal = () => {
+            const data = localStorage.getItem('sci-f1-Liao-Master-CN');
+            if (data) state = JSON.parse(data);
+        };
+
+        // --- Three.js 初始化 ---
+        let scene, camera, renderer, scientistGroup, items3D = {};
+        function initThree() {
+            const container = document.getElementById('three-container');
+            if (!container) return;
+            scene = new THREE.Scene(); scene.background = new THREE.Color(0xf1f5f9);
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000); camera.position.set(0, 1.5, 5);
+            renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize(container.clientWidth, container.clientHeight);
+            container.innerHTML = ''; container.appendChild(renderer.domElement);
+            const ambient = new THREE.AmbientLight(0xffffff, 0.8); scene.add(ambient);
+            const light = new THREE.DirectionalLight(0xffffff, 0.5); light.position.set(5, 10, 5); scene.add(light);
+            scientistGroup = new THREE.Group(); scene.add(scientistGroup);
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), new THREE.MeshStandardMaterial({ color: 0xffdbac })); head.position.y = 1.2; scientistGroup.add(head);
+            const body = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.2, 0.4), new THREE.MeshStandardMaterial({ color: 0x3b82f6 })); body.position.y = 0.3; scientistGroup.add(body);
+            items3D.labcoat = new THREE.Mesh(new THREE.BoxGeometry(0.75, 1.15, 0.45), new THREE.MeshStandardMaterial({ color: 0xffffff })); items3D.labcoat.position.y = 0.35; items3D.labcoat.visible = false; scientistGroup.add(items3D.labcoat);
+            items3D.goggles = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.15, 0.45), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.6 })); items3D.goggles.position.set(0, 1.3, 0.1); items3D.goggles.visible = false; scientistGroup.add(items3D.goggles);
+            items3D.tools = new THREE.Group(); items3D.tools.position.set(0.6, 0.3, 0.2); scientistGroup.add(items3D.tools);
+            shopData.filter(i => i.layer === 'tool').forEach(item => {
+                let mesh;
+                if(item.id === 'item_microscope') mesh = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4), new THREE.MeshStandardMaterial({color: 0x333333}));
+                else if(item.id === 'item_flask') mesh = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.3, 16), new THREE.MeshStandardMaterial({color: 0xec4899, transparent:true, opacity:0.8}));
+                else if(item.id === 'item_telescope') mesh = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.6), new THREE.MeshStandardMaterial({color: 0x4b5563}));
+                else if(item.id === 'item_dna') mesh = new THREE.Mesh(new THREE.TorusKnotGeometry(0.1, 0.03, 64, 8), new THREE.MeshStandardMaterial({color: 0xef4444}));
+                if(mesh) { mesh.name = item.id; mesh.visible = false; items3D.tools.add(mesh); }
+            });
+            let isDrag = false, prevX = 0;
+            container.addEventListener('mousedown', () => isDrag = true); window.addEventListener('mouseup', () => isDrag = false);
+            window.addEventListener('mousemove', (e) => { if(isDrag) scientistGroup.rotation.y += (e.clientX - prevX) * 0.01; prevX = e.clientX; });
+            function anim() { requestAnimationFrame(anim); scientistGroup.position.y = Math.sin(Date.now()*0.002)*0.03; renderer.render(scene, camera); }
+            anim();
+        }
+
+        // --- 全局核心函数 ---
+        window.toggleTask = (tid) => {
+            const t = allTasksFlat.find(x => x.id === tid);
+            const idx = allTasksFlat.indexOf(t);
+            const isAllDone = state.completedTasks.length === allTasksFlat.length;
+            if (!isAllDone && idx > 0 && !state.completedTasks.includes(allTasksFlat[idx-1].id)) return;
+            
+            state.currentTaskId = tid;
+            state.sectionApassed = (t.quiz.qA === null);
+            document.getElementById('quizTitle').innerText = "任务详情";
+            const secA = document.getElementById('sectionAContainer');
+            if(t.quiz.qA) {
+                secA.classList.remove('hidden');
+                document.getElementById('quizQuestionA').innerText = t.quiz.qA;
+                const opts = document.getElementById('quizOptionsA'); opts.innerHTML = '';
+                t.quiz.aA.forEach((o, i) => {
+                    const b = document.createElement('button');
+                    b.className = "w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-blue-400 font-bold transition-all bg-white text-sm";
+                    b.innerText = o; b.onclick = () => window.checkA(i); opts.appendChild(b);
+                });
+                document.getElementById('sectionC').classList.add('hidden');
+            } else {
+                secA.classList.add('hidden');
+                window.showSectionC();
+            }
+            document.getElementById('quizFeedback').classList.add('hidden');
+            document.getElementById('quizModal').classList.remove('hidden');
+        };
+
+        window.checkA = (i) => {
+            const t = allTasksFlat.find(x => x.id === state.currentTaskId);
+            const f = document.getElementById('quizFeedback'); f.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            if (i === t.quiz.correctA) {
+                f.innerText = "答案正确！请学习 Section C 要点。"; f.classList.add('bg-green-100', 'text-green-700');
+                state.sectionApassed = true; window.showSectionC();
+            } else { f.innerText = "选项错误，请再试一次！"; f.classList.add('bg-red-100', 'text-red-700'); }
+        };
+
+        window.showSectionC = () => {
+            const t = allTasksFlat.find(x => x.id === state.currentTaskId);
+            const secC = document.getElementById('sectionC'); secC.classList.remove('hidden');
+            document.getElementById('quizQuestionC').innerText = t.quiz.qC;
+            document.getElementById('quizAnswerC').innerHTML = t.quiz.aC.map(pt => `<div class="point-item">${pt}</div>`).join('');
+        };
+
+        window.markCompleted = () => {
+            if (!state.sectionApassed) return;
+            const t = allTasksFlat.find(x => x.id === state.currentTaskId);
+            if (!state.completedTasks.includes(t.id)) {
+                state.completedTasks.push(t.id); state.power += 10;
+                if (state.completedTasks.length === allTasksFlat.length) {
+                    shopData.forEach(item => { if (!state.inventory.includes(item.id)) state.inventory.push(item.id); });
+                }
+                renderMissions(); updateUI(); saveLocal();
+            }
+            window.closeQuiz();
+        };
+
+        window.closeQuiz = () => document.getElementById('quizModal').classList.add('hidden');
+        
+        window.toggleShop = () => { 
+            const m = document.getElementById('shopModal'); 
+            const notice = document.getElementById('shopRewardNotice');
+            if (m.classList.contains('hidden')) { 
+                if (state.completedTasks.length === allTasksFlat.length) notice.classList.remove('hidden');
+                renderShop(); m.classList.remove('hidden'); 
+            } else m.classList.add('hidden'); 
+        };
+
+        function renderShop() {
+            const c = document.getElementById('shopItems'); if (!c) return; c.innerHTML = '';
+            const isAllDone = state.completedTasks.length === allTasksFlat.length;
+            shopData.forEach(item => {
+                const owned = state.inventory.includes(item.id);
+                const d = document.createElement('div'); d.className = "bg-slate-50 p-6 rounded-[2.5rem] text-center border-2 border-transparent shadow-sm";
+                let btnHtml = owned ? `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-green-100 text-green-600 tracking-widest uppercase">已解锁</button>` :
+                             `<button disabled class="mt-4 w-full py-2.5 rounded-xl font-black text-[10px] bg-slate-200 text-slate-400 tracking-widest uppercase">待解锁</button>`;
                 d.innerHTML = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-slate-800 text-sm">${item.name}</h4>${btnHtml}`;
                 c.appendChild(d);
             });
