@@ -36,6 +36,11 @@
             
             <h1 class="text-3xl font-black text-slate-800 mb-2 tracking-tight">科学打卡挑战</h1>
             <p class="text-slate-400 mb-8 font-medium">15天 UPSA 提分特训</p>
+            
+            <div id="githubNotice" class="hidden mb-4 p-3 bg-blue-50 text-blue-700 text-[10px] rounded-xl border border-blue-100 italic">
+                GitHub 模式：请确保代码中的 firebaseConfig 已填写。
+            </div>
+
             <div class="space-y-4">
                 <input type="text" id="studentNameInput" placeholder="请输入学生姓名" 
                     class="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 outline-none transition-all text-center text-xl font-bold">
@@ -121,14 +126,14 @@
             <div id="quizContainer">
                 <div id="sectionAContainer" class="mb-8 p-8 bg-blue-50/50 rounded-[2.5rem] border border-blue-100">
                     <div class="flex items-center space-x-2 mb-4">
-                        <span class="text-[10px] font-black bg-blue-600 text-white px-2 py-1 rounded">SECTION A</span>
+                        <span class="text-[10px] font-black bg-blue-600 text-white px-2 py-1 rounded text-xs">SECTION A</span>
                     </div>
                     <p id="quizQuestionA" class="text-slate-700 font-bold text-lg leading-relaxed mb-6"></p>
                     <div id="quizOptionsA" class="grid grid-cols-1 gap-4"></div>
                 </div>
                 <div id="sectionC" class="hidden border-t border-slate-100 pt-8">
                     <div class="flex items-center space-x-2 mb-4">
-                        <span class="text-[10px] font-black bg-amber-500 text-white px-2 py-1 rounded">SECTION C</span>
+                        <span class="text-[10px] font-black bg-amber-500 text-white px-2 py-1 rounded text-xs">SECTION C</span>
                     </div>
                     <p id="quizQuestionC" class="text-slate-700 font-bold mb-6 text-lg leading-snug"></p>
                     <div id="quizAnswerC" class="bg-slate-50 p-6 rounded-[2rem] border border-slate-200 mb-8"></div>
@@ -148,7 +153,7 @@
                 <h3 class="text-3xl font-black text-slate-800">实验室装备店</h3>
                 <button onclick="toggleShop()" class="text-slate-300 text-4xl">&times;</button>
             </div>
-            <p id="shopRewardNotice" class="text-blue-500 font-bold text-sm hidden mb-4">✨ 大师成就达成：所有装备免费解开！ ✨</p>
+            <p id="shopRewardNotice" class="text-blue-500 font-bold text-sm hidden mb-4 text-center">✨ 大师成就达成：所有装备免费解开！ ✨</p>
             <div id="shopItems" class="grid grid-cols-2 sm:grid-cols-3 gap-6 overflow-y-auto max-h-[60vh] p-2"></div>
         </div>
     </div>
@@ -158,11 +163,72 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config);
+        // --- GitHub 部署专用配置逻辑 ---
+        let firebaseConfig;
+        let isLocalEnv = false;
+
+        try {
+            if (typeof __firebase_config !== 'undefined') {
+                firebaseConfig = JSON.parse(__firebase_config);
+                isLocalEnv = true;
+            } else {
+                // 如果在 GitHub 上运行，请在此处填入你的 Firebase 配置
+                // 你可以从 Firebase 控制台获取这些信息
+                firebaseConfig = {
+                    apiKey: "在此填入你的API_KEY",
+                    authDomain: "在此填入你的PROJECT_ID.firebaseapp.com",
+                    projectId: "在此填入你的PROJECT_ID",
+                    storageBucket: "在此填入你的PROJECT_ID.appspot.com",
+                    messagingSenderId: "在此填入你的SENDER_ID",
+                    appId: "在此填入你的APP_ID"
+                };
+                document.getElementById('githubNotice').classList.remove('hidden');
+            }
+        } catch (e) {
+            console.error("配置加载失败:", e);
+        }
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sci-f1-final-v8';
+        const appId = isLocalEnv ? (typeof __app_id !== 'undefined' ? __app_id : 'sci-f1-final-v9') : 'sci-f1-github-pages';
+
+        // --- 核心题目数据 (Day 1 - 15) ---
+        const missionsData = [
+            {
+                bab: 1,
+                title: "Bab 1: Pengenalan kepada Penyiasatan Saintifik",
+                tasks: [
+                    { id: "d1", title: "Day 1: 实验室安全", quiz: { qA: "(Section A) Antara simbol amaran berikut, yang manakah mewakili bahan beracun? / Which of the following hazard symbols represents toxic substances? [2m]", aA: ["A. 💀", "B. 🔥", "C. ☢️", "D. 💥"], correctA: 0, qC: "(Section C) Huraikan langkah-langkah yang perlu diambil jika berlaku tumpahan merkuri di dalam makmal. / Describe the steps taken if a mercury spill occurs. [13m]", aC: ["Langkah 1: Maklumkan guru atau pembantu makmal dengan segera. (1m)", "Langkah 2: Jadikan kawasan tumpahan sebagai kawasan larangan. (1m)", "Langkah 3: Tabur serbuk sulfur untuk menutupi tumpahan. (1m)", "Langkah 4: Hubungi Jabatan Bomba. (1m)", "Sebab: Merkuri adalah logam berat yang sangat toksik. (1m)", "Sebab: Wap merkuri menyerang sistem saraf. (1m)", "Sebab: Sulfur bertindak balas dengan merkuri untuk mengelakkan penguapan. (1m)"] } },
+                    { id: "d2", title: "Day 2: 密度应用", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Terangkan mengapa sebutir telur akan tenggelam dalam air mineral tetapi terapung dalam air garam yang pekat. / Explain why an egg sinks in mineral water but floats in concentrated salt water. [15m]", aC: ["Ketumpatan telur adalah lebih tinggi daripada air mineral. (1m)", "Maka, telur akan tenggelam dalam air mineral. (1m)", "Apabila garam dilarutkan, ketumpatan air mineral bertambah. (2m)", "Kepekatan garam yang tinggi menjadikan air garam lebih tumpat daripada telur. (2m)", "Telur kini menjadi kurang tumpat daripada air garam. (2m)", "Daya apungan (buoyant force) yang bertindak ke atas telur bertambah. (2m)", "Daya apungan ini cukup kuat untuk menyokong berat telur. (1m)", "Maka, telur akan terapung di permukaan air garam. (1m)"] } },
+                    { id: "d3", title: "Day 3: 物理量与读数", quiz: { qA: "(Section A) Apakah unit S.I. bagi arus elektrik? / What is the S.I. unit for electric current? [2m]", aA: ["A. Volt (V)", "B. Ohm (Ω)", "C. Ampere (A)", "D. Watt (W)"], correctA: 2, qC: "(Section C) Terangkan cara mengelakkan ralat paralaks semasa mengambil bacaan pada pembaris. / Explain how to avoid parallax error when taking readings on a ruler. [13m]", aC: ["Definisi: Ralat paralaks berlaku kerana kedudukan mata yang salah. (2m)", "Langkah: Kedudukan mata mestilah berserenjang with skala alat pengukur. (3m)", "Langkah: Pastikan mata berada tepat di atas tanda senggatan. (2m)", "Tujuan: Untuk mendapatkan bacaan yang tepat. (1m)"] } },
+                    { id: "d4", title: "Day 4: 细胞呼吸", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi respirasi sel dan terangkan kepentingannya. / Write the word equation for cell respiration and explain its importance. [15m]", aC: ["Persamaan: Glukosa (1m) + Oksigen (1m) → Karbon dioksida (1m) + Air (1m) + Tenaga (1m).", "Lokasi: Proses ini berlaku di dalam mitokondria. (2m)", "Kepentingan: Membebaskan tenaga untuk aktiviti sel. (2m)", "Kepentingan: Membolehkan organisma melakukan pergerakan. (2m)", "Kepentingan: Membantu dalam proses pertumbuhan sel baru. (2m)"] } },
+                    { id: "d5", title: "Day 5: 组织层次", quiz: { qA: "(Section A) Manakah antara berikut merupakan urutan organisasi sel yang betul? / Which is the correct cell organization sequence? [3m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem", "C. Tisu → Sel → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan fungsi jantung sebagai sebuah organ dalam sistem peredaran darah. / Explain the heart's function as an organ in the circulatory system. [12m]", aC: ["Komponen: Jantung terdiri daripada tisu otot jantung. (2m)", "Fungsi: Ia mengecut and mengendur secara berterusan. (2m)", "Tujuan: Untuk mengepam darah ke seluruh badan. (3m)", "Kepentingan: Memastikan oksigen and nutrien sampai ke setiap sel. (3m)", "Kepentingan: Menyingkirkan bahan buangan seperti karbon dioksida. (2m)"] } }
+                ]
+            },
+            {
+                bab: 2,
+                title: "Bab 2: Sel sebagai Unit Asas Kehidupan",
+                tasks: [
+                    { id: "d6", title: "Day 6: 细胞结构与功能", quiz: { qA: "(Section A) Antara berikut, yang manakah merupakan fungsi kloroplas? / Which of the following is the function of chloroplast? [2m]", aA: ["A. Mengawal aktiviti sel", "B. Menghasilkan tenaga", "C. Menyerap cahaya matahari untuk fotosintesis", "D. Memberi sokongan kepada sel"], correctA: 2, qC: "(Section C) Berdasarkan rajah sel tumbuhan, namakan tiga struktur yang hanya terdapat dalam sel tumbuhan and terangkan fungsinya. [13m]", aC: ["Struktur 1: Dinding sel (1m). Fungsi: Memberi bentuk yang tetap kepada sel (2m) and memberi sokongan/perlindungan (1m).", "Struktur 2: Kloroplas (1m). Fungsi: Mengandungi klorofill (1m) para menyerap cahaya matahari (2m) bagi proses fotosintesis (1m).", "Struktur 3: Vakuol (1m). Fungsi: Mengandungi sap sel (1m) yang memberikan sokongan kepada tumbuhan (2m) apabila segah (1m)."] } },
+                    { id: "d7", title: "Day 7: 单细胞与多细胞生物", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Kelaskan organisma berikut: Amoeba, Spirogyra, Paramecium, Mucor. [15m]", aC: ["Klasifikasi: Unisel: Amoeba (1m), Paramecium (1m). Multisel: Spirogyra (1m), Mucor (1m).", "Perbezaan 1 (Bilangan sel): Unisel=1 sel; Multisel=lebih 1 sel.", "Perbezaan 2 (Proses hidup): Unisel=semua dalam 1 sel; Multisel=sel khusus.", "Saiz: Unisel biasanya bersaiz mikroskopik (1m)."] } },
+                    { id: "d8", title: "Day 8: 组织层次 (进阶)", quiz: { qA: "(Section A) Urutan organisasi sel yang manakah betul? / Which cell organization sequence is correct?", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan bagaimana sel-sel dalam manusia membentuk satu organisma yang kompleks. [13m]", aC: ["Tahap 1: Sel ialah unit asas hidupan (1m).", "Tahap 2: Sekumpulan sel yang sama membentuk Tisu (2m).", "Tahap 3: Tisu yang berbeza bekerjasama membentuk Organ (2m).", "Tahap 4: Beberapa organ bekerjasama membentuk Sistem (2m).", "Tahap 5: 所有系统合作形成复杂生物体 (2m)."] } },
+                    { id: "d9", title: "Day 9: 光合作用", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi fotosintesis. [15m]", aC: ["Persamaan: Karbon dioksida + Air → Glukosa + Oksigen (Cahaya/Klorofil).", "Hasil 1 (Glukosa): Digunakan untuk tenaga (2m); simpan sebagai kanji (2m).", "Hasil 2 (Oksigen): Lepas ke atmosfera (2m)."] } },
+                    { id: "d15", title: "Day 15: 综合模拟与实验设计", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Reka satu eksperimen untuk menunjukkan bahawa klorofil diperlukan untuk fotosintesis. [15m]", aC: ["Hipotesis: Bahagian hijau (klorofil) hasilkan kanji.", "Langkah: Dedah cahaya matahari.", "Ujian: Iodin.", "Rendam: Air mendidih and etanol panas.", "Obs: Hijau jadi biru tua."] } }
+                ]
+            },
+            {
+                bab: 3,
+                title: "Bab 3: Koordinasi and Gerak Balas",
+                tasks: [
+                    { id: "d10", title: "Day 10: 稳态平衡定义", quiz: { qA: "(Section A) Apakah maksud homeostasis?", aA: ["A. Proses penghasilan sel baru", "B. Kawalan persekitaran dalaman badan"], correctA: 1, qC: "(Section C) Terangkan kepentingan homeostasis kepada manusia. [13m]", aC: ["Homeostasis mengekalkan persekitaran dalaman yang stabil (2m).", "Kawal suhu (1m) and kandungan air (1m).", "Metabolisme cekap (3m).", "Enzim berfungsi optimum (3m).", "Elak kematian (3m)."] } },
+                    { id: "d11", title: "Day 11: 体温调节-热", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tindak balas kulit dalam cuaca panas. [15m]", aC: ["Peluh: Serap haba (2m).", "Salur darah: Mengembang (Vasodilatasi) (2m).", "Bulu roma:贴近皮肤 (Condong) (2m)."] } },
+                    { id: "d12", title: "Day 12: 体温调节-冷", quiz: { qA: "(Section A) Mengapakah badan kita menggigil semasa sejuk?", aA: ["A. Untuk membebaskan haba", "B. Untuk menghasilkan haba"], correctA: 1, qC: "(Section C) Peranan otot rangka and hormon semasa sejuk. [13m]", aC: ["Otak isyarat otot rangka.", "Menggigil: Hasilkan haba (2m).", "Hormon: Tingkat metabolisme (2m)."] } },
+                    { id: "d13", title: "Day 13: 水分调节", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Mekanisme kawal atur air bila kurang minum. [15m]", aC: ["Air turun -> detected by hypothalamus (2m).", "Signal to kidney (2m).", "Ginjal serap semula lebih air (3m).", "Urin pekat and sedikit (3m)."] } },
+                    { id: "d14", title: "Day 14: 植物稳态 - Transpirasi", quiz: { qA: "(Section A) Di manakah proses transpirasi berlaku?", aA: ["A. Akar", "B. Stoma pada daun"], correctA: 1, qC: "(Section C) Transpirasi membantu homeostasis tumbuhan. [13m]", aC: ["Transpirasi: Kehilangan air wap (2m).", "Cooling effect (3m).", "Tarik air/mineral dari akar (4m)."] } }
+                ]
+            }
+        ];
 
         const shopData = [
             { id: 'item_labcoat', name: '3D 实验袍', price: 30, icon: '🥼', layer: 'labcoat' },
@@ -173,46 +239,10 @@
             { id: 'item_dna', name: 'DNA 模型', price: 60, icon: '🧬', layer: 'tool' }
         ];
 
-        const missionsData = [
-            {
-                bab: 1,
-                title: "Bab 1: Pengenalan kepada Penyiasatan Saintifik",
-                tasks: [
-                    { id: "d1", title: "Day 1: 实验室安全", quiz: { qA: "(Section A) Antara simbol amaran berikut, yang manakah mewakili bahan beracun? / Which of the following hazard symbols represents toxic substances? [2m]", aA: ["A. 💀", "B. 🔥", "C. ☢️", "D. 💥"], correctA: 0, qC: "(Section C) Huraikan langkah-langkah yang perlu diambil jika berlaku tumpahan merkuri di dalam makmal. / Describe the steps taken if a mercury spill occurs. [13m]", aC: ["Langkah 1: Maklumkan guru atau pembantu makmal dengan segera. (1m) / Inform teacher or lab assistant immediately. (1m)", "Langkah 2: Jadikan kawasan tumpahan sebagai kawasan larangan. (1m) / Declare spill area as restricted zone. (1m)", "Langkah 3: Tabur serbuk sulfur untuk menutupi tumpahan. (1m) / Sprinkle sulfur powder to cover the spill. (1m)", "Langkah 4: Hubungi Jabatan Bomba. (1m) / Call the Fire Department. (1m)", "Sebab: Merkuri adalah logam berat yang sangat toksik. (1m) / Mercury is a highly toxic heavy metal. (1m)", "Sebab: Wap merkuri menyerang sistem saraf. (1m) / Mercury vapor attacks the nervous system. (1m)", "Sebab: Sulfur bertindak balas dengan merkuri untuk mengelakkan penguapan. (1m) / Sulfur reacts with mercury to prevent evaporation. (1m)"] } },
-                    { id: "d2", title: "Day 2: 密度应用", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Terangkan mengapa sebutir telur akan tenggelam dalam air mineral tetapi terapung dalam air garam yang pekat. / Explain why an egg sinks in mineral water but floats in concentrated salt water. [15m]", aC: ["Ketumpatan telur adalah lebih tinggi daripada air mineral. (1m) / Density of egg is higher than mineral water. (1m)", "Maka, telur akan tenggelam dalam air mineral. (1m) / Therefore, the egg sinks in mineral water. (1m)", "Apabila garam dilarutkan, ketumpatan air mineral bertambah. (2m) / When salt is dissolved, the density of water increases. (2m)", "Kepekatan garam yang tinggi menjadikan air garam lebih tumpat daripada telur. (2m) / High salt concentration makes salt water denser than the egg. (2m)", "Telur kini menjadi kurang tumpat daripada air garam. (2m) / The egg now becomes less dense than salt water. (2m)", "Daya apungan (buoyant force) yang bertindak ke atas telur bertambah. (2m) / The buoyant force acting on the egg increases. (2m)", "Daya apungan ini cukup kuat untuk menyokong berat telur. (1m) / This buoyant force is strong enough to support the egg's weight. (1m)", "Maka, telur akan terapung di permukaan air garam. (1m) / Therefore, the egg will float on the surface of salt water. (1m)"] } },
-                    { id: "d3", title: "Day 3: 物理量与读数", quiz: { qA: "(Section A) Apakah unit S.I. bagi arus elektrik? / What is the S.I. unit for electric current? [2m]", aA: ["A. Volt (V)", "B. Ohm (Ω)", "C. Ampere (A)", "D. Watt (W)"], correctA: 2, qC: "(Section C) Terangkan cara mengelakkan ralat paralaks semasa mengambil bacaan pada pembaris. / Explain how to avoid parallax error when taking readings on a ruler. [13m]", aC: ["Definisi: Ralat paralaks berlaku kerana kedudukan mata yang salah. (2m) / Parallax error occurs due to wrong eye position. (2m)", "Langkah: Kedudukan mata mestilah berserenjang dengan skala alat pengukur. (3m) / The eye position must be perpendicular to the scale of the instrument. (3m)", "Langkah: Pastikan mata berada tepat di atas tanda senggatan. (2m) / Ensure the eye is directly above the graduation mark. (2m)", "Tujuan: Untuk mendapatkan bacaan yang tepat. (1m) / To obtain an accurate reading. (1m)"] } },
-                    { id: "d4", title: "Day 4: 细胞呼吸", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi respirasi sel dan terangkan kepentingannya. / Write the word equation for cell respiration and explain its importance. [15m]", aC: ["Persamaan: Glukosa (1m) + Oksigen (1m) → Karbon dioksida (1m) + Air (1m) + Tenaga (1m).", "Lokasi: Proses ini berlaku di dalam mitokondria. (2m) / This process occurs in the mitochondria. (2m)", "Kepentingan: Membebaskan tenaga untuk aktiviti sel. (2m) / Releases energy for cell activities. (2m)", "Kepentingan: Membolehkan organisma melakukan pergerakan. (2m) / Allows organisms to perform movement. (2m)", "Kepentingan: Membantu dalam proses pertumbuhan sel baru. (2m) / Helps in the process of new cell growth. (2m)"] } },
-                    { id: "d5", title: "Day 5: 组织层次", quiz: { qA: "(Section A) Manakah antara berikut merupakan urutan organisasi sel yang betul? / Which is the correct cell organization sequence? [3m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem", "C. Tisu → Sel → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan fungsi jantung sebagai sebuah organ dalam sistem peredaran darah. / Explain the heart's function as an organ in the circulatory system. [12m]", aC: ["Komponen: Jantung terdiri daripada tisu otot jantung. (2m) / Heart consists of cardiac muscle tissue. (2m)", "Fungsi: Ia mengecut and mengendur secara berterusan. (2m) / It contracts and relaxes continuously. (2m)", "Tujuan: Untuk mengepam darah ke seluruh badan. (3m) / To pump blood to the whole body. (3m)", "Kepentingan: Memastikan oksigen and nutrien sampai ke setiap sel. (3m) / Ensures oxygen and nutrients reach every cell. (3m)", "Kepentingan: Menyingkirkan bahan buangan seperti karbon dioksida. (2m) / Removes waste products like carbon dioxide. (2m)"] } }
-                ]
-            },
-            {
-                bab: 2,
-                title: "Bab 2: Sel sebagai Unit Asas Kehidupan",
-                tasks: [
-                    { id: "d6", title: "Day 6: 细胞结构与功能", quiz: { qA: "(Section A) Antara berikut, yang manakah merupakan fungsi kloroplas? / Which of the following is the function of chloroplast? [2m]", aA: ["A. Mengawal aktiviti sel", "B. Menghasilkan tenaga", "C. Menyerap cahaya matahari untuk fotosintesis", "D. Memberi sokongan kepada sel"], correctA: 2, qC: "(Section C) Berdasarkan rajah sel tumbuhan, namakan tiga struktur yang hanya terdapat dalam sel tumbuhan and terangkan fungsinya. / Based on the plant cell diagram, name three structures found only in plant cells and explain their functions. [13m]", aC: ["Struktur 1: Dinding sel (1m). Fungsi: Memberi bentuk yang tetap kepada sel (2m) and memberi sokongan/perlindungan (1m).", "Struktur 2: Kloroplas (1m). Fungsi: Mengandungi klorofill (1m) untuk menyerap cahaya matahari (2m) bagi proses fotosintesis (1m).", "Struktur 3: Vakuol (1m). Fungsi: Mengandungi sap sel (1m) yang memberikan sokongan kepada tumbuhan (2m) apabila segah (1m)."] } },
-                    { id: "d7", title: "Day 7: 单细胞与多细胞生物", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Kelaskan organisma berikut: Amoeba, Spirogyra, Paramecium, Mucor. Terangkan dua perbezaan utama antara organisma unisel and multisel. [15m]", aC: ["Klasifikasi: Unisel: Amoeba (1m), Paramecium (1m). Multisel: Spirogyra (1m), Mucor (1m).", "Perbezaan 1 (Bilangan sel): Organisma unisel terdiri daripada satu sel sahaja (2m). Organisma multisel terdiri daripada lebih daripada satu sel (2m).", "Perbezaan 2 (Proses hidup): Unisel: Semua proses hidup berlaku dalam satu sel yang sama (3m). Multisel: Mempunyai pelbagai jenis sel yang menjalankan fungsi khusus (3m).", "Perbezaan 3 (Saiz): Unisel biasanya bersaiz mikroskopik (1m)."] } },
-                    { id: "d8", title: "Day 8: 组织层次 (进阶)", quiz: { qA: "(Section A) Urutan organisasi sel yang manakah betul? / Which cell organization sequence is correct? [2m]", aA: ["A. Sel → Organ → Tisu → Sistem", "B. Sel → Tisu → Organ → Sistem"], correctA: 1, qC: "(Section C) Terangkan bagaimana sel-sel dalam manusia membentuk satu organisma yang kompleks. / Explain how cells in humans form a complex organism. [13m]", aC: ["Tahap 1: Sel ialah unit asas hidupan (1m). Contoh: Sel otot (1m).", "Tahap 2: Sekumpulan sel yang sama menjalankan fungsi yang sama membentuk Tisu (2m). Contoh: Tisu otot (1m).", "Tahap 3: Tisu yang berbeza bekerjasama membentuk Organ (2m). Contoh: Jantung (1m).", "Tahap 4: Beberapa organ bekerjasama untuk menjalankan satu fungsi utama membentuk Sistem (2m). Contoh: Sistem peredaran darah (1m).", "Tahap 5: Semua sistem bekerjasama membentuk Organisma (Manusia) (2m)."] } },
-                    { id: "d9", title: "Day 9: 光合作用", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Tuliskan persamaan perkataan bagi fotosintesis. Terangkan apa yang berlaku kepada hasil fotosintesis tersebut. [15m]", aC: ["Persamaan: Karbon dioksida (1m) + Air (1m) → Glukosa (1m) + Oksigen (1m) [Cahaya/Klorofil].", "Hasil 1 (Glukosa): Digunakan oleh tumbuhan untuk tenaga (2m); Selebihnya disimpan dalam bentuk kanji (2m); Disimpan di bahagian seperti daun, buah atau akar (2m).", "Hasil 2 (Oksigen): Dibebaskan ke atmosfera melalui stoma (2m); Digunakan oleh organisma lain untuk respirasi (1m)."] } },
-                    { id: "d15", title: "Day 15: 综合模拟与实验设计", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Reka satu eksperimen untuk menunjukkan bahawa klorofil diperlukan untuk fotosintesis with menggunakan daun bervariasi. [15m]", aC: ["Hipotesis: Hanya bahagian daun yang hijau (mengandungi klorofil) menghasilkan kanji (3m).", "Langkah 1: Dedahkan tumbuhan kepada cahaya matahari selama beberapa jam (2m).", "Langkah 2: Petik daun and jalankan ujian iodin (2m).", "Langkah 3: Rendam daun dalam air mendidih untuk memecahkan sel (2m).", "Langkah 4: Rendam dalam etanol panas untuk menyingkirkan klorofil (2m).", "Pemerhatian: Bahagian hijau bertukar menjadi biru tua (2m). Bahagian bukan hijau bertukar menjadi coklat (2m)."] } }
-                ]
-            },
-            {
-                bab: 3,
-                title: "Bab 3: Koordinasi and Gerak Balas",
-                tasks: [
-                    { id: "d10", title: "Day 10: 稳态平衡定义", quiz: { qA: "(Section A) Apakah maksud homeostasis? / What is the meaning of homeostasis? [2m]", aA: ["A. Proses penghasilan sel baru", "B. Kawalan persekitaran dalaman badan"], correctA: 1, qC: "(Section C) Terangkan kepentingan homeostasis kepada manusia. [13m]", aC: ["Homeostasis mengekalkan persekitaran dalaman yang stabil (2m).", "Contohnya mengawal suhu badan (1m) and kandungan air (1m).", "Ia membolehkan proses kimia dalam badan (metabolisme) berlaku with cekap (3m).", "Ia memastikan enzim dapat berfungsi pada tahap optimum (3m).", "Tanpa homeostasis, perubahan drastik dalam badan boleh menyebabkan kematian (3m)."] } },
-                    { id: "d11", title: "Day 11: 体温调节-热", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Huraikan bagaimana kulit bertindak balas untuk menurunkan suhu badan apabila seseorang berada dalam cuaca panas. [15m]", aC: ["Kelenjar peluh: Merembeskan peluh (2m). Peluh menyerap haba dari kulit untuk sejatan (2m). Kulit menjadi sejuk (1m).", "Salur darah: Mengembang (Pemvasodilatan) (2m). Lebih banyak darah mengalir dekat permukaan kulit (2m). Haba dibebaskan melalui radiasi (2m).", "Bulu roma: Condong ke permukaan kulit (2m). Kurangkan lapisan udara terperangkap (1m). Haba lebih mudah dibebaskan (1m)."] } },
-                    { id: "d12", title: "Day 12: 体温调节-冷", quiz: { qA: "(Section A) Mengapakah badan kita menggigil semasa sejuk? / Why does our body shiver when cold? [2m]", aA: ["A. Untuk membebaskan haba", "B. Untuk menghasilkan haba"], correctA: 1, qC: "(Section C) Terangkan peranan otot rangka and hormon dalam meningkatkan suhu badan semasa sejuk. [13m]", aC: ["Otak menghantar isyarat ke otot rangka (2m).", "Otot rangka mengecut and mengendur secara aktif (3m).", "Proses ini dipanggil menggigil (2m).", "Ia menghasilkan haba untuk menaikkan suhu badan (2m).", "Hormon tertentu dirembeskan (2m) untuk meningkatkan kadar metabolisme badan (2m)."] } },
-                    { id: "d13", title: "Day 13: 水分调节", quiz: { qA: null, aA: [], correctA: null, qC: "(Section C) Terangkan mekanisme kawal atur air dalam badan apabila seseorang minum air yang terlalu sedikit. [15m]", aC: ["Kandungan air dalam badan menurun (2m).", "Otak (Hipotalamus) mengesan perubahan ini (2m).", "Isyarat dihantar ke ginjal (2m).", "Ginjal menyerap semula lebih banyak air ke dalam darah (3m).", "Urin yang dihasilkan adalah sedikit (3m).", "Urin yang dihasilkan adalah pekat (3m)."] } },
-                    { id: "d14", title: "Day 14: 植物稳态 - Transpirasi", quiz: { qA: "(Section A) Di manakah proses transpirasi berlaku? / Where does transpiration occur? [2m]", aA: ["A. Akar", "B. Stoma pada daun"], correctA: 1, qC: "(Section C) Terangkan bagaimana transpirasi membantu tumbuhan mengekalkan homeostasis. [13m]", aC: ["Transpirasi ialah kehilangan air dalam bentuk wap air (2m).", "Ia berlaku melalui stoma (1m).", "Proses sejatan air ini membantu menyejukkan tumbuhan pada hari panas (3m).", "Ia menghasilkan daya tarikan transpirasi (3m).", "Daya ini menarik air and mineral dari akar ke seluruh bahagian tumbuhan (4m)."] } }
-                ]
-            }
-        ];
-
         const allTasksFlat = missionsData.flatMap(b => b.tasks);
         let state = { studentName: "", power: 0, completedTasks: [], inventory: [], equipped: { labcoat: false, goggles: false, tool: null }, user: null, currentTaskId: null, sectionApassed: false };
 
-        // --- Three.js ---
+        // --- 核心 JS 逻辑 ---
         let scene, camera, renderer, scientistGroup, items3D = {};
         function initThree() {
             const container = document.getElementById('three-container');
@@ -244,13 +274,23 @@
             anim();
         }
 
-        // --- Core Functions ---
         window.handleLogin = async () => {
             const nameEl = document.getElementById('studentNameInput');
             const name = nameEl ? nameEl.value.trim() : "";
-            if (!name || !state.user) return;
+            if (!name) return;
+
+            if (!state.user) {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch(e) { alert("登录授权失败，请确认 Firebase 配置。"); return; }
+            }
+
             state.studentName = name;
-            const btn = document.getElementById('loginBtn'); if(btn) { btn.innerText = "同步中..."; btn.disabled = true; }
+            const btn = document.getElementById('loginBtn'); if(btn) { btn.innerText = "同步进度中..."; btn.disabled = true; }
             try {
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'studentProgress', name);
                 const snap = await getDoc(docRef);
@@ -264,7 +304,8 @@
                 document.getElementById('loginModal').classList.add('hidden');
                 document.getElementById('appContent').classList.remove('hidden');
                 initThree(); renderMissions(); updateUI();
-            } catch (e) { console.error(e); alert("网络连接失败"); }
+            } catch (e) { alert("数据保存失败。请确认 Firestore 已启用。"); }
+            finally { if(btn) { btn.innerText = "进入实验室"; btn.disabled = false; } }
         };
 
         window.toggleTask = (tid) => {
@@ -273,11 +314,9 @@
             const isAllDone = state.completedTasks.length === allTasksFlat.length;
             const locked = !isAllDone && idx > 0 && !state.completedTasks.includes(allTasksFlat[idx-1].id);
             if (locked) return;
-            
             state.currentTaskId = tid;
             const hasSectionA = t.quiz.qA !== null;
             state.sectionApassed = !hasSectionA;
-            
             document.getElementById('quizTitle').innerText = t.title;
             const secA = document.getElementById('sectionAContainer');
             if(hasSectionA) {
@@ -330,6 +369,7 @@
         };
 
         window.closeQuiz = () => document.getElementById('quizModal').classList.add('hidden');
+        
         window.toggleShop = () => { 
             const m = document.getElementById('shopModal'); 
             const notice = document.getElementById('shopRewardNotice');
@@ -371,7 +411,7 @@
         };
 
         async function sync() {
-            if (!state.user || !state.studentName) return;
+            if (!state.studentName) return;
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'studentProgress', state.studentName);
             const dataToSave = { power: state.power, completedTasks: state.completedTasks, inventory: state.inventory, equipped: state.equipped, lastUpdated: new Date().toISOString() };
             await setDoc(docRef, dataToSave, { merge: true });
@@ -431,8 +471,7 @@
         }
 
         onAuthStateChanged(auth, u => { if(u) state.user = u; });
-        const initAuth = async () => { if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token); else await signInAnonymously(auth); };
-        initAuth();
+        
         window.showSectionC = () => {
             const t = allTasksFlat.find(x => x.id === state.currentTaskId);
             const secC = document.getElementById('sectionC'); secC.classList.remove('hidden');
